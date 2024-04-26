@@ -1,6 +1,8 @@
 from dataclasses import dataclass, asdict
 from typing import TYPE_CHECKING
-from opendevin.schema import ActionType
+
+from opendevin import config
+from opendevin.schema import ActionType, ConfigType
 
 if TYPE_CHECKING:
     from opendevin.controller import AgentController
@@ -18,7 +20,13 @@ class Action:
             v = d.pop('action')
         except KeyError:
             raise NotImplementedError(f'{self=} does not have action attribute set')
-        return {'action': v, 'args': d}
+        thoughts = ''
+        if 'thoughts' in d:
+            thoughts = d.pop('thoughts')
+        if config.get(ConfigType.THOUGHTS_FIELD):
+            return {'thoughts': thoughts, 'action': v, 'args': d}
+        else:
+            return {'action': v, 'args': d}
 
     def to_dict(self):
         d = self.to_memory()

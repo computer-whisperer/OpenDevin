@@ -48,8 +48,8 @@ class FileReadAction(ExecutableAction):
     path: str
     start: int = 0
     end: int = -1
-    thoughts: str = ''
     action: str = ActionType.READ
+    thoughts: str = ''
 
     def _read_lines(self, all_lines: list[str]):
         if self.end == -1:
@@ -96,8 +96,8 @@ class FileWriteAction(ExecutableAction):
     content: str
     start: int = 0
     end: int = -1
-    thoughts: str = ''
     action: str = ActionType.WRITE
+    thoughts: str = ''
 
     def _insert_lines(self, to_insert: list[str], original: list[str]):
         """

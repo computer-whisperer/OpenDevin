@@ -14,6 +14,7 @@ class CmdRunAction(ExecutableAction):
     command: str
     background: bool = False
     action: str = ActionType.RUN
+    thoughts: str = ''
 
     async def run(self, controller: 'AgentController') -> 'CmdOutputObservation':
         return controller.action_manager.run_command(self.command, self.background)
@@ -27,6 +28,7 @@ class CmdRunAction(ExecutableAction):
 class CmdKillAction(ExecutableAction):
     id: int
     action: str = ActionType.KILL
+    thoughts: str = ''
 
     async def run(self, controller: 'AgentController') -> 'CmdOutputObservation':
         return controller.action_manager.kill_command(self.id)

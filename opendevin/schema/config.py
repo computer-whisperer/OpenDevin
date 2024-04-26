@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class ConfigType(str, Enum):
+    THOUGHTS_FIELD = 'THOUGHTS_FIELD'
     LLM_API_KEY = 'LLM_API_KEY'
     LLM_BASE_URL = 'LLM_BASE_URL'
     WORKSPACE_BASE = 'WORKSPACE_BASE'

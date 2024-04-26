@@ -41,7 +41,11 @@ def action_from_dict(action: dict) -> Action:
         raise AgentMalformedActionError(
             f"'{action['action']=}' is not defined. Available actions: {ACTION_TYPE_TO_CLASS.keys()}"
         )
+    thoughts = ''
+    if 'thoughts' in action:
+        thoughts = action['thoughts']
     args = action.get('args', {})
+    args['thoughts'] = thoughts
     try:
         decoded_action = action_class(**args)
     except TypeError:

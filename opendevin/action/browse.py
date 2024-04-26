@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 class BrowseURLAction(ExecutableAction):
     url: str
     action: str = ActionType.BROWSE
+    thoughts: str = ''
 
     async def run(self, controller: 'AgentController') -> BrowserOutputObservation:  # type: ignore
         asked_url = self.url

@@ -70,6 +70,7 @@ class AgentSummarizeAction(NotExecutableAction):
 class AgentFinishAction(NotExecutableAction):
     outputs: Dict = field(default_factory=dict)
     action: str = ActionType.FINISH
+    thoughts: str = ''
 
     async def run(self, controller: 'AgentController') -> 'Observation':
         raise NotImplementedError
@@ -84,6 +85,7 @@ class AgentDelegateAction(ExecutableAction):
     agent: str
     inputs: dict
     action: str = ActionType.DELEGATE
+    thoughts: str = ''
 
     async def run(self, controller: 'AgentController') -> 'Observation':
         await controller.start_delegate(self)
