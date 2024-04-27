@@ -32,7 +32,7 @@ class AgentRecallAction(ExecutableAction):
 
 @dataclass
 class AgentThinkAction(NotExecutableAction):
-    thought: str
+    thoughts: str
     action: str = ActionType.THINK
 
     async def run(self, controller: 'AgentController') -> 'Observation':
@@ -40,7 +40,7 @@ class AgentThinkAction(NotExecutableAction):
 
     @property
     def message(self) -> str:
-        return self.thought
+        return self.thoughts
 
 
 @dataclass
