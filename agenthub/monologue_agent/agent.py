@@ -188,7 +188,7 @@ class MonologueAgent(Agent):
                     action = BrowseURLAction(url=url)
                     output_type = ActionType.BROWSE
                 else:
-                    action = AgentThinkAction(thought=thought)
+                    action = AgentThinkAction(thoughts=thought)
                 self._add_event(action.to_memory())
         self._initialized = True
 

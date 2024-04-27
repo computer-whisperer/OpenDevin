@@ -29,7 +29,8 @@ This is your internal monologue, in JSON format:
 
 Your most recent thought is at the bottom of that monologue. Continue your train of thought.
 What is your next thought or action? Your response must be in JSON format.
-It must be an object, and it must contain two fields:
+It must be an object, and it must contain three fields:
+* `thoughts`, which is a string describing your thought or action
 * `action`, which is one of the actions below
 * `args`, which is a map of key-value pairs, specifying the arguments for that action
 
@@ -48,8 +49,7 @@ Here are the possible actions:
   * `url` - the URL to open
 * `recall` - recalls a past memory. Arguments:
   * `query` - the query to search for
-* `think` - make a plan, set a goal, or record your thoughts. Arguments:
-  * `thought` - the thought to record
+* `think` - make a plan, set a goal, or record your thoughts. No arguments.
 * `finish` - if you're absolutely certain that you've completed your task and have tested your work, use the finish action to stop working.
 
 %(background_commands)s
@@ -126,7 +126,7 @@ def get_request_action_prompt(
         latest_thought = thoughts[-1]
         if 'action' in latest_thought:
             if latest_thought['action'] == 'think':
-                if latest_thought['args']['thought'].startswith('OK so my task is'):
+                if latest_thought['thoughts'].startswith('OK so my task is'):
                     hint = "You're just getting started! What should you do first?"
                 else:
                     hint = "You've been thinking a lot lately. Maybe it's time to take action?"
