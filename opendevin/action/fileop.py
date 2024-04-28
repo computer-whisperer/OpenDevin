@@ -33,6 +33,9 @@ def resolve_path(file_path, working_directory):
 
     # If the path is outside the workspace, deny it
     if not abs_path_in_sandbox.is_relative_to(SANDBOX_PATH_PREFIX):
+        print(SANDBOX_PATH_PREFIX)
+        print(abs_path_in_sandbox)
+        print(working_directory)
         raise PermissionError(f'File access not permitted: {file_path}')
 
     # Get path relative to the root of the workspace inside the sandbox
