@@ -17,11 +17,11 @@ from opendevin.schema.config import ConfigType
 
 from .base import ExecutableAction
 
-SANDBOX_PATH_PREFIX = '/workspace/'
-
 
 def resolve_path(file_path, working_directory):
     path_in_sandbox = Path(file_path)
+
+    workspace_path_in_sandbox = config.get(ConfigType.WORKSPACE_MOUNT_PATH_IN_SANDBOX)
 
     # Apply working directory
     if not path_in_sandbox.is_absolute():
@@ -32,14 +32,14 @@ def resolve_path(file_path, working_directory):
     abs_path_in_sandbox = path_in_sandbox.resolve()
 
     # If the path is outside the workspace, deny it
-    if not abs_path_in_sandbox.is_relative_to(SANDBOX_PATH_PREFIX):
-        print(SANDBOX_PATH_PREFIX)
+    if not abs_path_in_sandbox.is_relative_to(workspace_path_in_sandbox):
+        print(workspace_path_in_sandbox)
         print(abs_path_in_sandbox)
         print(working_directory)
         raise PermissionError(f'File access not permitted: {file_path}')
 
     # Get path relative to the root of the workspace inside the sandbox
-    path_in_workspace = abs_path_in_sandbox.relative_to(Path(SANDBOX_PATH_PREFIX))
+    path_in_workspace = abs_path_in_sandbox.relative_to(Path(workspace_path_in_sandbox))
 
     # Get path relative to host
     path_in_host_workspace = Path(config.get(ConfigType.WORKSPACE_BASE)) / path_in_workspace
