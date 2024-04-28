@@ -1,4 +1,5 @@
 import os
+import traceback
 
 from dataclasses import dataclass
 from pathlib import Path
@@ -93,6 +94,7 @@ class FileReadAction(ExecutableAction):
                 except IsADirectoryError:
                     return AgentErrorObservation(f'Path is a directory: {self.path}. You can only read files')
             except PermissionError:
+                print(traceback.format_exc())
                 return AgentErrorObservation(f'Malformed paths not permitted: {self.path}')
         return FileReadObservation(path=self.path, content=code_view)
 
@@ -152,6 +154,7 @@ class FileWriteAction(ExecutableAction):
                 except UnicodeDecodeError:
                     return AgentErrorObservation(f'File could not be decoded as utf-8: {self.path}')
             except PermissionError:
+                print(traceback.format_exc())
                 return AgentErrorObservation(f'Malformed paths not permitted: {self.path}')
         return FileWriteObservation(content='', path=self.path)
 
