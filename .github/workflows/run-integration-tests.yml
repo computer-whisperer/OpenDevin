@@ -62,7 +62,7 @@ jobs:
             embedding-model: "local"
             # sufficient to have one agent testing against local sandbox
             sandbox: "local"
-            sandbox-workspace-path: "$GITHUB_WORKSPACE/workspace"
+            sandbox-workspace-path: "${{ github.workspace }}/workspace"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
